@@ -25,11 +25,11 @@ Effortlessly analyze VE, MAF, and timing tables, get instant heatmaps, and expor
 
 1. **Install requirements**
    ```bash
-   pip install streamlit pandas numpy altair
+   pip install -r requirements.txt
    ```
 2. **Run the app:**
    ```bash
-   streamlit run tuner_dashboard.py
+   streamlit run app.py
    ```
 3. **Load data**
    - Drag-and-drop a log file, or use "Load local file" to browse.
@@ -97,11 +97,11 @@ Effortlessly analyze VE, MAF, and timing tables, get instant heatmaps, and expor
 
 1. **Install requirements**
    ```bash
-   pip install streamlit pandas numpy altair
+   pip install -r requirements.txt
    ```
 2. **Run the app:**
    ```bash
-   streamlit run tuner_dashboard.py
+   streamlit run app.py
    ```
 3. **Load data**
    - Drag-and-drop a log file, or use "Load local file" to browse.
