@@ -369,10 +369,14 @@ else:
         df, units_map = extract_dataframe_from_raw(raw_bytes, header_line_index=None, sep_guess=sep_guess)
         if df.empty:
             st.error("Failed to parse file: resulted in empty DataFrame. Please check the file format and try selecting a header manually.")
+            st.session_state.pop('parsed_df', None)
+            st.session_state.pop('units_map', None)
             st.stop()
     except Exception as e:
         st.error(f"Failed to parse file automatically: {e}")
         st.info("Please try selecting the correct header line manually using the 'Header candidate selector' above.")
+        st.session_state.pop('parsed_df', None)
+        st.session_state.pop('units_map', None)
         st.stop()
 
 st.markdown(f"**Rows loaded:** {len(df)}")
