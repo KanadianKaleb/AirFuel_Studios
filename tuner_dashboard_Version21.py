@@ -343,10 +343,14 @@ if st.button("Apply Header Selection"):
             st.success("Header applied and parsed.")
         else:
             st.error("Parsing resulted in empty DataFrame.")
+            st.session_state.pop('parsed_df', None)
+            st.session_state.pop('units_map', None)
+            st.stop()
     except Exception as e:
         st.error(f"Failed to parse with selected header: {e}")
         st.session_state.pop('parsed_df', None)
         st.session_state.pop('units_map', None)
+        st.stop()
 
 # if user applied header previously, use that parsed_df cached
 if 'parsed_df' in st.session_state:
@@ -361,7 +365,19 @@ else:
         sep_guess = ";"
     elif sep_option == "tab (\\t)":
         sep_guess = "\t"
-    df, units_map = extract_dataframe_from_raw(raw_bytes, header_line_index=None, sep_guess=sep_guess)
+    try:
+        df, units_map = extract_dataframe_from_raw(raw_bytes, header_line_index=None, sep_guess=sep_guess)
+        if df.empty:
+            st.error("Failed to parse file: resulted in empty DataFrame. Please check the file format and try selecting a header manually.")
+            st.session_state.pop('parsed_df', None)
+            st.session_state.pop('units_map', None)
+            st.stop()
+    except Exception as e:
+        st.error(f"Failed to parse file automatically: {e}")
+        st.info("Please try selecting the correct header line manually using the 'Header candidate selector' above.")
+        st.session_state.pop('parsed_df', None)
+        st.session_state.pop('units_map', None)
+        st.stop()
 
 st.markdown(f"**Rows loaded:** {len(df)}")
 st.dataframe(df.head(50), use_container_width=True)
