@@ -110,7 +110,7 @@ if repo_names:
         if st.sidebar.button("Load from Repository"):
             st.session_state['uploaded_bytes'] = st.session_state['csv_repo'][selected_repo]
             st.success(f"Loaded {selected_repo} from repository.")
-            st.experimental_rerun()
+            st.rerun()
 else:
     st.sidebar.info("No saved logs yet.")
 
